@@ -100,9 +100,9 @@ namespace SQL
                 if (rm11 > rm12 || rm21 > rm22) MessageBox.Show("масса не может уменьшиться");
                 else 
                 {
-                double X1 = (rm12 - rm11) * 100 / rV1;
-                double X2 = (rm22 - rm21) * 100 / rV2;
-                    if (Math.Abs(X1 * 100 / rV1 - X2 * 100 / rV2) <= 0.05)
+                double X1 = (rm12 - rm11) * 100000 / rV1;
+                double X2 = (rm22 - rm21) * 100000 / rV2;
+                    if (Math.Abs(X1 * 1000000 - (X2 * 1000000)) <= 0.05)
                     {
                         double X = (X1 + X2) / 2;
                         MessageBox.Show("Массовая доля смолы и пыли в испытуемом газе равна: " + X +"г/100см^3");
