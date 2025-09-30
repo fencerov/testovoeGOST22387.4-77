@@ -12,8 +12,8 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 namespace SQL
 {
     public partial class Form1 : Form
-    {   
-        
+    {
+        System.Windows.Forms.ToolTip toolTip = new System.Windows.Forms.ToolTip();
         public Form1()
         {
             InitializeComponent();
@@ -76,6 +76,10 @@ namespace SQL
             {
                 textBox.BackColor = Color.LightCoral;
                 checkValid = false;
+                if (max.HasValue)
+                    toolTip.SetToolTip(textBox, $"Введите число от {min} до {max.Value}");
+                else
+                    toolTip.SetToolTip(textBox, $"Введите число не меньше {min}");
             }
             else
             {
@@ -96,26 +100,27 @@ namespace SQL
             double.TryParse(m22.Text, out double rm22);
             double.TryParse(V1.Text, out double rV1);
             double.TryParse(V2.Text, out double rV2);
-            if (allFilled && checkValid)
+            if (allFilled)
             {
-                if (rm11 > rm12 || rm21 > rm22) MessageBox.Show("масса не может уменьшиться");
-                else 
+                if (checkValid)
                 {
-                double X1 = (rm12 - rm11) * 100000 / rV1;
-                double X2 = (rm22 - rm21) * 100000 / rV2;
-                    if (Math.Abs(X1 * 1000000 - (X2 * 1000000)) <= 0.05)
+                    if (rm11 > rm12 || rm21 > rm22) MessageBox.Show("масса не может уменьшиться");
+                    else
                     {
-                        double X = (X1 + X2) / 2;
-                        MessageBox.Show("Массовая доля смолы и пыли в испытуемом газе равна: " + X +"г/100см^3");
-                        SaveToBD(X1, X2, X);
+                        double X1 = (rm12 - rm11) * 100000 / rV1;
+                        double X2 = (rm22 - rm21) * 100000 / rV2;
+                        if (Math.Abs(X1 * 1000000 - (X2 * 1000000)) <= 0.05)
+                        {
+                            double X = (X1 + X2) / 2;
+                            MessageBox.Show("Массовая доля смолы и пыли в испытуемом газе равна: " + X + "г/100см^3");
+                            SaveToBD(X1, X2, X);
+                        }
+                        else MessageBox.Show("Расхождение выше допустимого");
                     }
-                    else MessageBox.Show("Расхождение выше допустимого");
                 }
+                else MessageBox.Show("Одно или несколько значений не соответствуют требованиям");
             }
-            else
-            {
-                MessageBox.Show("Введите все необходимые значения");
-            }
+            else MessageBox.Show("Не все значения введены");
         }
         private void SaveToBD(double X1, double X2, double X)
         {
