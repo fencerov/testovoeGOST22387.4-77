@@ -103,9 +103,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="createBD.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="createTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

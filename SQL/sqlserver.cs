@@ -23,13 +23,29 @@ namespace SQL
                 return;
             }
 
-            string connectionString = $"Data Source={serverName};Initial Catalog=master;Integrated Security=True";
+            string masterConnectionString = $"Data Source={serverName};Initial Catalog=master;Integrated Security=True";
+            string dbName = "testBD";
 
             try
             {
-                ExecuteSqlFile(connectionString, "createBD.sql");
-                string dbConnectionString = $"Data Source={serverName};Initial Catalog=testBD;Integrated Security=True";
-                ExecuteSqlFile(dbConnectionString, "createTable.sql");
+                string createDbScript = $"CREATE DATABASE [{dbName}];";
+                ExecuteSqlCommand(masterConnectionString, createDbScript);
+
+                var builder = new SqlConnectionStringBuilder(masterConnectionString)
+                {
+                    InitialCatalog = dbName
+                };
+                string dbConnectionString = builder.ConnectionString;
+
+                string basePath = AppDomain.CurrentDomain.BaseDirectory;
+                string tableScriptPath = Path.Combine(basePath, "createTable.sql");
+
+                if (!File.Exists(tableScriptPath))
+                    throw new FileNotFoundException($"Файл 'createTable.sql' не найден по пути {tableScriptPath}");
+
+                string tableScript = File.ReadAllText(tableScriptPath);
+
+                ExecuteSqlScript(dbConnectionString, tableScript);
 
                 MessageBox.Show("База данных и таблицы успешно созданы.");
             }
@@ -38,31 +54,36 @@ namespace SQL
                 MessageBox.Show("Ошибка: " + ex.Message);
             }
         }
-
-        private void ExecuteSqlFile(string connectionString, string fileName)
+        private void ExecuteSqlCommand(string connectionString, string commandText)
         {
-            string basePath = AppDomain.CurrentDomain.BaseDirectory;
-            string filePath = Path.Combine(basePath, fileName);
-
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException($"Файл {fileName} не найден по пути {filePath}");
-
-            string script = File.ReadAllText(filePath);
-            string[] commands = script.Split(new string[] { "GO" }, StringSplitOptions.RemoveEmptyEntries);
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                foreach (var commandText in commands)
+                using (SqlCommand cmd = new SqlCommand(commandText, connection))
                 {
-                    using (var command = new SqlCommand(commandText, connection))
-                    {
-                        command.ExecuteNonQuery();
-                    }
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
 
+        private void ExecuteSqlScript(string connectionString, string script)
+        {
+            string[] commands = script.Split(new[] { "\r\nGO", "\nGO", "\rGO" }, StringSplitOptions.RemoveEmptyEntries);
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                foreach (var command in commands)
+                {
+                    if (!string.IsNullOrWhiteSpace(command))
+                    {
+                        using (SqlCommand cmd = new SqlCommand(command, connection))
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+        }
         private void label1_Click(object sender, EventArgs e)
         {
             this.Hide();
