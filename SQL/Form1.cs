@@ -121,7 +121,6 @@ namespace SQL
         {
             string srv = Globalname.ServerName;
             db db1 = new db(srv);
-            MessageBox.Show(srv);
             SqlConnection connection = db1.GetConnection();
 
             string query = "INSERT INTO testRes (X1, X2, X) VALUES (@X1, @X2, @X)";
