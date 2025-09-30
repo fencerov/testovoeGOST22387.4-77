@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.IO;
 using System.Windows.Forms;
+using static SQL.sqlserver;
 
 namespace SQL
 {
@@ -22,8 +23,8 @@ namespace SQL
                 MessageBox.Show("Введите имя сервера");
                 return;
             }
-
-            string masterConnectionString = $"Data Source={serverName};Initial Catalog=master;Integrated Security=True";
+            Globalname.ServerName = serverName;
+            string masterConnectionString = $"Data Source={serverName};Initial Catalog=testBD;Integrated Security=True";
             string dbName = "testBD";
 
             try

@@ -1,4 +1,4 @@
-﻿using MySqlX.XDevAPI;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Input;
+using static SQL.sqlserver;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 namespace SQL
 {
@@ -118,7 +119,9 @@ namespace SQL
         }
         private void SaveToBD(double X1, double X2, double X)
         {
-            db db1 = new db();
+            string srv = Globalname.ServerName;
+            db db1 = new db(srv);
+            MessageBox.Show(srv);
             SqlConnection connection = db1.GetConnection();
 
             string query = "INSERT INTO testRes (X1, X2, X) VALUES (@X1, @X2, @X)";
