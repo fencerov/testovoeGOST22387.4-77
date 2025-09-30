@@ -24,7 +24,7 @@ namespace SQL
                 return;
             }
             Globalname.ServerName = serverName;
-            string masterConnectionString = $"Data Source={serverName};Initial Catalog=testBD;Integrated Security=True";
+            string masterConnectionString = $"Data Source={serverName};Initial Catalog=master;Integrated Security=True";
             string dbName = "testBD";
 
             try
