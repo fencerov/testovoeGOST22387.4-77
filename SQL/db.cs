@@ -6,9 +6,10 @@ namespace SQL
     internal class db
     {
         private SqlConnection connection;
+        private string connectionString;
         public db(string serverName)
         {
-            string connectionString = $"Data Source={serverName};Initial Catalog=testBD;Integrated Security=True";
+            connectionString = $"Data Source={serverName};Initial Catalog=testBD;Integrated Security=True";
             connection = new SqlConnection(connectionString);
         }
 

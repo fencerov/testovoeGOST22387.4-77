@@ -16,22 +16,29 @@ namespace SQL
         private void LoadTableData()
         {
             string serverName = Globalname.ServerName;
-            string connectionString = $"Data Source={serverName};Initial Catalog=testBD;Integrated Security=True";
 
-            string query = "SELECT * FROM testRes";
+            db db1 = new db(serverName);
 
             DataTable table = new DataTable();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                using (SqlCommand command = new SqlCommand(query, connection))
+                db1.openConnect();
+
+                using (SqlCommand command = new SqlCommand("SELECT * FROM testRes", db1.GetConnection()))
                 {
-                    connection.Open();
                     SqlDataAdapter adapter = new SqlDataAdapter(command);
                     adapter.Fill(table);
                 }
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при загрузке данных: " + ex.Message);
+            }
+            finally
+            {
+                db1.closeConnect();
+            }
             dataGridView1.DataSource = table;
         }
 
