@@ -105,12 +105,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.sk11 = new System.Windows.Forms.TextBox();
             this.t11 = new System.Windows.Forms.TextBox();
+            this.table = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panel1.Controls.Add(this.table);
             this.panel1.Controls.Add(this.close1);
             this.panel1.Controls.Add(this.close);
             this.panel1.Controls.Add(this.button1);
@@ -190,7 +192,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1362, 597);
+            this.panel1.Size = new System.Drawing.Size(1372, 623);
             this.panel1.TabIndex = 0;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
@@ -871,11 +873,22 @@
             this.t11.TabIndex = 1;
             this.t11.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
+            // table
+            // 
+            this.table.AutoSize = true;
+            this.table.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.table.Location = new System.Drawing.Point(606, 601);
+            this.table.Name = "table";
+            this.table.Size = new System.Drawing.Size(172, 13);
+            this.table.TabIndex = 77;
+            this.table.Text = "таблица предыдущих испытаний";
+            this.table.Click += new System.EventHandler(this.table_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1362, 597);
+            this.ClientSize = new System.Drawing.Size(1372, 623);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
@@ -965,6 +978,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label close;
         private System.Windows.Forms.Label close1;
+        private System.Windows.Forms.Label table;
     }
 }
 

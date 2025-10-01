@@ -74,6 +74,12 @@
     <Compile Include="sqlserver.Designer.cs">
       <DependentUpon>sqlserver.cs</DependentUpon>
     </Compile>
+    <Compile Include="TableRes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TableRes.Designer.cs">
+      <DependentUpon>TableRes.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -91,6 +97,9 @@
     </Compile>
     <EmbeddedResource Include="sqlserver.resx">
       <DependentUpon>sqlserver.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TableRes.resx">
+      <DependentUpon>TableRes.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -112,7 +112,7 @@ namespace SQL
                         if (Math.Abs(X1 * 1000000 - (X2 * 1000000)) <= 0.05)
                         {
                             double X = (X1 + X2) / 2;
-                            MessageBox.Show("Массовая доля смолы и пыли в испытуемом газе равна: " + X + "г/100см^3");
+                            MessageBox.Show($"Массовая доля в первом испытании: {X1}г/100см^3 \nМассовая доля во втором испытании: {X2}г/100см^3 \nМассовая доля смолы и пыли в испытуемом газе равна: {X}г/100см^3");
                             SaveToBD(X1, X2, X);
                         }
                         else MessageBox.Show("Расхождение выше допустимого");
@@ -139,7 +139,7 @@ namespace SQL
                 {
                     db1.openConnect();
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Данные добавлены");
+                    MessageBox.Show("Данные добавлены в базу данных");
                 }
                 catch (Exception ex)
                 {
@@ -152,5 +152,11 @@ namespace SQL
             }
         }
 
+        private void table_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            TableRes TR = new TableRes();
+            TR.Show();
+        }
     }
 }
